@@ -1,12 +1,12 @@
 services:
     app:
         container_name: aplication
-        build: .
-        restart: always
+        build: 
+            context: .
         ports:
             - "80:80"
         volumes:
-            - ".:/var/www/html"
+            - "./:/var/www/html"
     db:
         container_name: database
         image: mariadb

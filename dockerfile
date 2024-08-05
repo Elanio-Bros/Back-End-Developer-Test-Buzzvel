@@ -8,8 +8,6 @@ RUN apt-get install -y libzip-dev \
 			libpq-dev
 RUN docker-php-ext-install zip pdo_mysql
 
+RUN a2enmod rewrite
+
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-COPY . /var/www/html
-
-RUN composer install
