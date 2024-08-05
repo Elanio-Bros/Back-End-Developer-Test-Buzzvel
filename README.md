@@ -8,6 +8,10 @@ Esse projeto tem como ideia utilizar o framework laravel para inicar um projeto 
 ### Primeiros Passo
 Antes de colocar o projeto em ativa, primeiro deve se configurar o arquivo **.env** , esses arquivo ele é de extrema importancia para o projeto pois é nele que estão as principais configurações do sitema o arquivo [.env.example](.env.example) sevirar de base para nosso sistema. As variaveis a ser configurada nesse arquivo são
 
+### Necessário
+ - [PHP 8.0](https://www.php.net/)
+ - [Composer](https://getcomposer.org/)
+ 
 <details>
 <summary>Configurações do banco</summary>
 
@@ -20,10 +24,6 @@ Antes de colocar o projeto em ativa, primeiro deve se configurar o arquivo **.en
 
 </details>
 <br>
-
-### Necessário
- - [PHP 8.0](https://www.php.net/)
- - [Composer](https://getcomposer.org/)
 
 Faça as devidas configurações no arquivo **.env** e execute alguns comandos em terminal dentro do repositório:
 
