@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plans;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,8 @@ class Holiday_Plans extends Controller
 
     public function __construct()
     {
-        $this->user_id = intval(Auth::user()['id']);
+        $this->user_id = 1;
+        // intval(Auth::user()['id'])
     }
 
     public function list(Request $request)
@@ -52,14 +54,14 @@ class Holiday_Plans extends Controller
 
     public function get_plan_document(mixed $id)
     {
+        $plan = Plans::where([['id', '=', $id], ['user_id', '=', $this->user_id]])->first();
 
-        // $plan = Plans::where([['id', '=', $id], ['user_id', '=', $this->user_id]])->first();
-
-        // if ($plan != null) {
-        //     return response()->json($plan, 200);
-        // } else {
-        //     return response()->json(['erro' => 'plan', 'message' => 'plan not found'], 404);
-        // }
+        if ($plan != null) {
+            $pdf = Pdf::loadView('pdf.plan', $plan->toArray());
+            return $pdf->stream("plan_{$plan['date']}.pdf");
+        } else {
+            return response()->json(['erro' => 'plan', 'message' => 'plan not found'], 404);
+        }
     }
 
     public function create(Request $request)

@@ -11,7 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User_Auth extends Authenticatable implements JWTSubject
 {
-    use Notifiable, HasFactory;
+    use Notifiable;
 
     protected $table = 'users';
     const CREATED_AT = 'created_at';

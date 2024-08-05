@@ -47,9 +47,11 @@ class PlansTest extends TestCase
     public function test_get_document_plan(): void
     {
         $user_id = User_Auth::first()['id'];
-        $plan_id = Plans::first()['id'];
-        $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user_id))->get("/api/plans/{$plan_id}");
-        $response->assertStatus(200);
+        $plan = Plans::first();
+        $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user_id))->get("/api/plans/{$plan['id']}/document");
+        $this->assertNotEmpty($response->getContent());
+        $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        $this->assertEquals('inline; filename="plan_'.$plan["date"].'.pdf"', $response->headers->get('Content-Disposition'));
     }
 
     public function test_update_plan(): void

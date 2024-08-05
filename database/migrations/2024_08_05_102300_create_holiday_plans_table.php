@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title')->nullable(false);
             $table->text('description')->nullable(false);
             $table->text('location')->nullable(false);
-            $table->json('participants');
+            $table->json('participants')->nullable(true);
             $table->date('date');
             $table->timestamp('update_at');
             $table->timestamp('created_at')->useCurrent();
