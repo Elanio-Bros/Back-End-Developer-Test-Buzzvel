@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Holiday_Plans extends Model
+class Plans extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,9 @@ class Holiday_Plans extends Model
     protected $fillable = [
         'title', 'description', 'date',
         'participants', 'date',
+
+        // hidden
+        'user_id',
     ];
 
     /**
@@ -41,5 +44,6 @@ class Holiday_Plans extends Model
 
     protected $casts = [
         'date' => 'date',
+        'participants' => 'json'
     ];
 }

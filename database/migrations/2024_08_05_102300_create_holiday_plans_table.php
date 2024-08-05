@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('holiday_plans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('title')->nullable(false);
             $table->text('description')->nullable(false);
             $table->json('participants');
             $table->date('date');
             $table->timestamp('update_at');
             $table->timestamp('created_at')->useCurrent();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
