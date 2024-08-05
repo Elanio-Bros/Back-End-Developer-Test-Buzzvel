@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('title')->nullable(false);
             $table->text('description')->nullable(false);
+            $table->text('location')->nullable(false);
             $table->json('participants');
             $table->date('date');
             $table->timestamp('update_at');

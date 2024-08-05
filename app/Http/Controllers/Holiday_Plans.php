@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class Holiday_Plans extends Controller
 {
-    private $user_id;
+    private int $user_id;
+
     public function __construct()
     {
-        $this->user_id = Auth::user()['id'];
+        $this->user_id = intval(Auth::user()['id']);
     }
+
     public function list(Request $request)
     {
         $validate = $this->validate($request, [
@@ -48,9 +50,24 @@ class Holiday_Plans extends Controller
         }
     }
 
+    public function get_plan_document(mixed $id)
+    {
+
+        // $plan = Plans::where([['id', '=', $id], ['user_id', '=', $this->user_id]])->first();
+
+        // if ($plan != null) {
+        //     return response()->json($plan, 200);
+        // } else {
+        //     return response()->json(['erro' => 'plan', 'message' => 'plan not found'], 404);
+        // }
+    }
+
     public function create(Request $request)
     {
-        $values = $this->validate($request, ['title' => 'string|required', 'description' => 'string|required', 'date' => 'date_format:Y-m-d|required', 'participants' => 'array', 'participants.*' => 'string']);
+        $values = $this->validate($request, [
+            'title' => 'string|required', 'description' => 'string|required', 'location' => 'string|required',
+            'date' => 'date_format:Y-m-d|required', 'participants' => 'array', 'participants.*' => 'string'
+        ]);
 
         $values['user_id'] = $this->user_id;
 
@@ -61,7 +78,10 @@ class Holiday_Plans extends Controller
 
     public function update(Request $request, mixed $id)
     {
-        $values = $this->validate($request, ['title' => 'string', 'description' => 'string', 'date' => 'date_format:Y-m-d', 'participants' => 'array', 'participants.*' => 'string']);
+        $values = $this->validate($request, [
+            'title' => 'string', 'description' => 'string', 'location' => 'string',
+            'date' => 'date_format:Y-m-d', 'participants' => 'array', 'participants.*' => 'string'
+        ]);
 
         if (count($values) < 1) {
             return response()->json(['message' => 'plan not change'], 204);

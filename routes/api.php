@@ -19,9 +19,9 @@ Route::post('/logout', [App\Http\Controllers\System::class, 'logout']);
 
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'plans'], function () {
     Route::get('/', [App\Http\Controllers\Holiday_Plans::class, 'list']);
+    Route::post('/', [App\Http\Controllers\Holiday_Plans::class, 'create']);
     Route::get('/{plan_id}', [App\Http\Controllers\Holiday_Plans::class, 'get_plan']);
     Route::get('/{plan_id}/document', [App\Http\Controllers\Holiday_Plans::class, 'get_plan_document']);
-    Route::post('/', [App\Http\Controllers\Holiday_Plans::class, 'create']);
     Route::match(['put', 'patch'], '/{plan_id}/', [App\Http\Controllers\Holiday_Plans::class, 'update']);
     Route::delete('/{plan_id}/', [App\Http\Controllers\Holiday_Plans::class, 'delete']);
 });

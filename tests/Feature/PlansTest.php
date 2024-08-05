@@ -15,7 +15,7 @@ class PlansTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user->id))->post('/api/plans', [
             'title' => 'Holiday on Plans 1',
             'description' => "This first plan talks about how I'm going to get to where I'm going and come back later.",
-            'date' => '2024-12-08', 'participants' => array('Ana', 'Maria')
+            'date' => '2024-12-08', 'location' => 'Waterpark', 'participants' => array('Ana', 'Maria')
         ]);
 
         $response->assertStatus(201);
@@ -34,6 +34,22 @@ class PlansTest extends TestCase
         $user = User_Auth::first();
         $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user->id))->get('/api/plans?' . http_build_query(['paginate' => true, 'page' => 1]));
         $response->assertStatus(200)->assertJsonStructure(['data', 'per_page', 'total']);
+    }
+
+    public function test_get_plan(): void
+    {
+        $user_id = User_Auth::first()['id'];
+        $plan_id = Plans::first()['id'];
+        $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user_id))->get("/api/plans/{$plan_id}");
+        $response->assertStatus(200);
+    }
+
+    public function test_get_document_plan(): void
+    {
+        $user_id = User_Auth::first()['id'];
+        $plan_id = Plans::first()['id'];
+        $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user_id))->get("/api/plans/{$plan_id}");
+        $response->assertStatus(200);
     }
 
     public function test_update_plan(): void
