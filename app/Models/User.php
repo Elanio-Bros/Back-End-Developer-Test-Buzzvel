@@ -12,6 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'update_at';
     /**
      * The attributes that are mass assignable.
      *

@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return response()->json('Ok');
-});
+Route::post('/login', [App\Http\Controllers\System::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\System::class, 'logout']);
