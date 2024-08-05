@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable(false);
             $table->text('description')->nullable(false);
-            $table->timestamp('date')->useCurrent();
             $table->json('participants');
+            $table->date('date');
+            $table->timestamp('update_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
