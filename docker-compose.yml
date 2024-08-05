@@ -6,10 +6,10 @@ services:
         ports:
             - "8000:80"
         volumes:
-            - "/home/www/Back-End-Developer-Test-Buzzvel:/var/www/html"
+            - ".:/var/www/html"
     db:
         container_name: aplication
-        image: mariadb
+        image: mariadb:11.5.1
         environment:
             MARIADB_ROOT_PASSWORD: root
         ports:
