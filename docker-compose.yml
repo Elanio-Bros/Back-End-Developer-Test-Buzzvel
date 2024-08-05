@@ -12,5 +12,6 @@ services:
         image: mariadb
         environment:
             MARIADB_ROOT_PASSWORD: root
+            MARIADB_DATABASE: Test-Buzzvel
         ports:
-            - "3006:3006"
+            - "3308:3306"
