@@ -4,12 +4,12 @@ services:
         build: .
         restart: always
         ports:
-            - "8000:80"
+            - "80:80"
         volumes:
             - ".:/var/www/html"
     db:
-        container_name: aplication
-        image: mariadb:11.5.1
+        container_name: database
+        image: mariadb
         environment:
             MARIADB_ROOT_PASSWORD: root
         ports:
