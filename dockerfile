@@ -11,5 +11,8 @@ RUN docker-php-ext-install zip pdo_mysql
 RUN a2enmod rewrite
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www/html
 
-COPY ./.env.exemple /var/www/html/.env
+COPY . .
+
+RUN ["composer","install"]
