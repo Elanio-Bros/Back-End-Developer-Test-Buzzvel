@@ -14,8 +14,7 @@ class Holiday_Plans extends Controller
 
     public function __construct()
     {
-        $this->user_id = 1;
-        // intval(Auth::user()['id'])
+        $this->user_id = intval(Auth::user()['id']);
     }
 
     public function list(Request $request)
@@ -25,7 +24,7 @@ class Holiday_Plans extends Controller
             'paginate' => 'boolean', 'page' => 'integer', 'per_page' => 'integer'
         ]);
 
-        $list_plans = Plans::where('user_id', '=', $this->user_id)->orderBy('id', $validate['order_by'] ?? 'ASC');
+        $list_plans = Plans::select('id', 'title', 'date', 'create_time')->where('user_id', '=', $this->user_id)->orderBy('id', $validate['order_by'] ?? 'ASC');
 
         if (isset($validate['search'])) {
             $list_plans->where('title', 'LIKE', $validate['search']);

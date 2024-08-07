@@ -65,7 +65,7 @@ Caso queira utilizar ele em um servidor independete deve direcionar para [/publi
  - [Docker](https://www.docker.com/) 
  - [Docker-Compose](https://docs.docker.com/compose/)
 
-Faça as devidas configurações no arquivo **.env** para evitar erro na hora da compilação da aplicação:
+Para começar execute os comandos :
 
 1. Faça o build da imagem e carrege os contaner:
 ```bash
@@ -94,11 +94,12 @@ docker exec -it aplication php artisan migrate --seed
 docker exec -it aplication php artisan test
 ```
 
-Caso queira utilizar ele em um servidor independete deve direcionar para [/public/index.php](public/index.php) para que a aplicação funcione de forma correta.
+Pronto seu sistema estára configurado para rodar de forma nativa no seu docker em [localhost](http://localhost/).
 
 </details>
 
 
 <br>
+
 ### Endpoints
 Aplicação conta com varias rotas de acesso para utlização do sistema, todas rotas autenticadas utilizam do sistema JWT descrito na documentação na rota ``/`` dos sistema. 

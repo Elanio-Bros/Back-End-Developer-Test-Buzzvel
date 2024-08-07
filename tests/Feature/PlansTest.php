@@ -21,6 +21,14 @@ class PlansTest extends TestCase
         $response->assertStatus(201);
     }
 
+
+    public function test_list_without_login(): void
+    {
+        $response = $this->getJson('/api/plans');
+
+        $response->assertStatus(401)->assertJsonStructure(['erro', 'message']);
+    }
+
     public function test_list_plans(): void
     {
         $user = User_Auth::first();
@@ -51,7 +59,7 @@ class PlansTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . Auth::tokenById($user_id))->get("/api/plans/{$plan['id']}/document");
         $this->assertNotEmpty($response->getContent());
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('inline; filename="plan_'.$plan["date"].'.pdf"', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('inline; filename="plan_' . $plan["date"] . '.pdf"', $response->headers->get('Content-Disposition'));
     }
 
     public function test_update_plan(): void
