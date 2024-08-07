@@ -3,7 +3,7 @@
 The idea of ​​this project is to use the Laravel framework to start a plan management project, using system integration tests and authentication via JWT.
 The system already comes with a pre-registered user: 
 > User: User_1 <br/>
-> Email:user_1@email.com.br <br/>
+> Email: user_1@email.com.br <br/>
 > Password: user_1%123 <br/>
 
 Below are two ways to run the application :
