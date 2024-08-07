@@ -1,0 +1,657 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Back-End-Developer-Test-Buzzvel",
+        "description": "The idea of this project is to start a holiday plan management system",
+        "contact": {
+            "email": "elaniobros@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [{
+        "url": "http://127.0.0.1:80",
+        "description": "locahost"
+    }],
+    "tags": [{
+            "name": "login",
+            "description": "Routes on login user"
+        },
+        {
+            "name": "plans",
+            "description": "Operations for manage plans"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "login"
+                ],
+                "summary": "login user",
+                "description": "By login from user\n",
+                "parameters": [{
+                        "name": "email",
+                        "in": "query",
+                        "description": "pass an optional search string for looking up inventory",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password user",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "return user autheticad",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Response_Login"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "bad input parameter"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "login"
+                ],
+                "summary": "logout user",
+                "description": "By logout from user\n",
+                "responses": {
+                    "200": {
+                        "description": "sucess user logout"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/plans": {
+            "get": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "list plans",
+                "parameters": [{
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "paginat",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "desc",
+                                "asc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "plan list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [{
+                                        "$ref": "#/components/schemas/List"
+                                    }, {
+                                        "$ref": "#/components/schemas/Paginate"
+                                    }]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            }
+        },
+        "/plans/{plan_id}": {
+            "get": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "get plan selected",
+                "parameters": [{
+                    "name": "plan_id",
+                    "in": "path",
+                    "description": "Numeric ID of the plan to get",
+                    "required": true,
+                    "style": "simple",
+                    "explode": false,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "return plan selected",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Plans"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "return erro on plan not found"
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            }
+        },
+        "/plans/{plan_id}/document": {
+            "get": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "convert plan selected for pdf document",
+                "parameters": [{
+                    "name": "plan_id",
+                    "in": "path",
+                    "description": "Numeric ID of the plan to get",
+                    "required": true,
+                    "style": "simple",
+                    "explode": false,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "return pdf stream of selected plan",
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "return erro on plan not found"
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            }
+        },
+        "/plans/": {
+            "post": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "create new plan",
+                "parameters": [{
+                        "name": "title",
+                        "in": "query",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "Y-m-d"
+                        }
+                    },
+                    {
+                        "name": "participants",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "return sucesse created plan"
+                    },
+                    "404": {
+                        "description": "return erro on produt not found"
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            }
+        },
+        "/plans/{plan_id}/": {
+            "put": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "update plan",
+                "parameters": [{
+                        "name": "title",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "Y-m-d"
+                        }
+                    },
+                    {
+                        "name": "participants",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "return plan update with message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Plans"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "return erro on produt not found"
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            },
+            "patch": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "update plan",
+                "parameters": [{
+                        "name": "title",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "Y-m-d"
+                        }
+                    },
+                    {
+                        "name": "participants",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "return plan update with message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Plans"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "return erro on produt not found"
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            },
+            "delete": {
+                "tags": [
+                    "plans"
+                ],
+                "summary": "delete plan",
+                "parameters": [{
+                    "name": "plan_id",
+                    "in": "path",
+                    "description": "Numeric ID of the plan to get",
+                    "required": true,
+                    "style": "simple",
+                    "explode": false,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "return sucess on delete plan"
+                    },
+                    "404": {
+                        "description": "return erro on produt not found"
+                    }
+                },
+                "security": [{
+                    "bearerAuth": []
+                }]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Response_Login": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "format": "bearer",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "bearer"
+                    },
+                    "expires_in": {
+                        "type": "integer",
+                        "example": 1440
+                    }
+                }
+            },
+            "Plans": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "description"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "Y-m-d",
+                        "example": "0000-00-00"
+                    },
+                    "update_at": {
+                        "type": "string",
+                        "format": "Y-m-d H:i:s",
+                        "example": "0000-00-00 00:00:00"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "Y-m-d H:i:s",
+                        "example": "0000-00-00 00:00:00"
+                    }
+                }
+            },
+            "Paginate_Plans": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "Y-m-d",
+                        "example": "0000-00-00"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "Y-m-d H:i:s",
+                        "example": "0000-00-00 00:00:00"
+                    }
+                }
+            },
+            "List": {
+                "type": "object",
+                "description": "Normal list in route",
+                "properties": {
+                    "plans": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Paginate_Plans"
+                        }
+                    },
+                    "count": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Paginate": {
+                "type": "object",
+                "description": "List in paginate parameter is true",
+                "properties": {
+                    "current_page": {
+                        "type": "integer"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Paginate_Plans"
+                        }
+                    },
+                    "first_page_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "from": {
+                        "type": "integer"
+                    },
+                    "last_page": {
+                        "type": "integer"
+                    },
+                    "last_page_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "next_page_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "per_page": {
+                        "type": "integer"
+                    },
+                    "prev_page_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "total": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

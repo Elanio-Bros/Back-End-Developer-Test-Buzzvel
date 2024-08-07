@@ -41,7 +41,6 @@ class Holiday_Plans extends Controller
 
     public function get_plan(mixed $id)
     {
-
         $plan = Plans::where([['id', '=', $id], ['user_id', '=', $this->user_id]])->first();
 
         if ($plan != null) {

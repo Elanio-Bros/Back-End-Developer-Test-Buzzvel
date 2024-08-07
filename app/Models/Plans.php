@@ -23,7 +23,7 @@ class Plans extends Model
     protected $fillable = [
         'title', 'description', 'date',
         'participants', 'date', 'location',
-
+        'update_at', 'created_at',
         // hidden
         'user_id',
     ];

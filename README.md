@@ -1,103 +1,107 @@
 # Back-End-Developer-Test-Buzzvel
-## Conceitos Inciais
-Esse projeto tem como ideia utilizar o framework laravel para inicar um projeto de gerenciamento de planos, utilizando-se de teste de intergração no sistema e autenticação via JWT
+## Resume
+The idea of ​​this project is to use the Laravel framework to start a plan management project, using system integration tests and authentication via JWT.
+The system already comes with a pre-registered user: 
+> User: User_1
+> Email:user_1@email.com.br
+> Password: user_1%123
+
+Below are two ways to run the application :
 
 <details>
-<summary>Sem Docker</summary>
+<summary>Without Docker</summary>
 
-### Primeiros Passo
-Antes de colocar o projeto em ativa, primeiro deve se configurar o arquivo **.env** , esses arquivo ele é de extrema importancia para o projeto pois é nele que estão as principais configurações do sitema o arquivo [.env.example](.env.example) sevirar de base para nosso sistema. As variaveis a ser configurada nesse arquivo são
+### Essential
+Before activating the project, you must first configure the **.env** file. This file is extremely important for the project because it contains the main system settings. The [.env.example] file will serve as the basis for our system. The variables to be configured in this file are
 
-### Necessário
+### Requirements
  - [PHP 8.0](https://www.php.net/)
  - [Composer](https://getcomposer.org/)
  
 <details>
-<summary>Configurações do banco</summary>
+<summary>Database settings in .env</summary>
 
-### Configurações do banco
-`DB_HOST`->url do banco de dados<br>
-`DB_DATABASE`-> o banco principal<br>
-`DB_PORT`->Porta utilizada no sistema de banco de dados<br>
-`DB_USERNAME`->usuario do banco de dados<br>
-`DB_PASSWORD`->senha do banco de dados<br>
-
+### Settings
+`DB_HOST`-> database host<br>
+`DB_DATABASE`->The main database<br>
+`DB_PORT`->Port used in the database system<br>
+`DB_USERNAME`->database user<br>
+`DB_PASSWORD`->database password<br>
 </details>
 <br>
 
-Faça as devidas configurações no arquivo **.env** e execute alguns comandos em terminal dentro do repositório:
+After making the appropriate configurations in the **.env** file, run some terminal commands within the repository:
 
-1. Instalação todas as dependecias do projeto
+1. Install all project dependencies with composer
 ```bash
 composer install
 ```
-2. Gerar chave de encriptação da aplicação
+2. Generate application encryption key
 ```bash
 php artisan key:generate
 ```
-3. Gerar chave de encriptação da authenticação JWT
+3. Generate JWT encryption and authentication key
 ```bash
 php artisan jwt:secret
 ```
-4. Criar bases de dados e o segmentos iniciais
+4. Create databases and initial segments
 ```bash
 php artisan migrate --seed
 ```
-
-5. Inicar um server local
+5. Start a local server
 ```bash
 php artisan serve
 ```
 
-Caso queira utilizar ele em um servidor independete deve direcionar para [/public/index.php](public/index.php) para que a aplicação funcione de forma correta.
+If you want to use it on an independent server, you must redirect to [/public/index.php](public/index.php) for the application to work correctly.
 
-Caso queira, execute os testes para analise se está em ordem com as rotas na aplicação:
+If you want, run the tests to analyze whether the routes in the application are in order:
 ```bash
 php artisan test
 ```
 </details>
 
 <details>
-<summary>Com Docker</summary>
+<summary>With Docker</summary>
 
-### Necessário
+### Essential
  - [Docker](https://www.docker.com/) 
  - [Docker-Compose](https://docs.docker.com/compose/)
 
-Para começar execute os comandos :
+To start, run the commands:
 
-1. Execute para poder fazer o build da imagem e inicializar os containers:
+1. Run to build the image and initialize the containers:
 ```bash
 docker-compose -f "docker-compose.yml" up -d --build
 ```
 
-2. Execute esse comando para uma configuração rápida da aplicação:
+2. Run this command for a quick application setup:
 
 ``` bash
 docker exec -it aplication bash -c "cp .env.example .env; php artisan key:generate; php artisan jwt:secret; php artisan migrate --seed"
 ```
-Ou Execute esses abaixo para:
+Or run these below to:
 
-3. Criar um copia do arquivo .env:
+3. Create a copy of the **.env** file:
 ```bash
 docker exec -it aplication cp .env.example .env
 ```
-4. Gerar a chave de encriptação da aplicação:
+4. Generate the application encryption key:
 ```bash
 docker exec -it aplication php artisan key:generate
 ```
-5. Gerar chave de encriptação da authenticação JWT:
+5. Generate JWT encryption and authentication key:
 ```bash
 docker exec -it aplication php artisan jwt:secret
 ```
-6. Criar bases de dados e o segmentos iniciais
+6. Create databases and initial segments
 ```bash
 docker exec -it aplication php artisan migrate --seed
 ```
 
-Pronto seu sistema estára configurado para rodar de forma nativa no seu docker em [localhost](http://localhost/).
+Your system will now be configured to run natively on your docker at [localhost](http://localhost/).
 
-Caso queira, execute os testes para analise se está em ordem com as rotas na aplicação::
+If you want, run the tests to analyze whether the routes in the application are in order:
 ```bash
 docker exec -it aplication php artisan test
 ```
@@ -107,4 +111,5 @@ docker exec -it aplication php artisan test
 <br>
 
 ### Endpoints
-Aplicação conta com varias rotas de acesso para utlização do sistema, todas rotas autenticadas utilizam do sistema JWT descrito na documentação na rota ``/`` dos sistema. 
+The application has several access routes for using the system, all authenticated routes use the JWT system described in the documentation in the ``/`` system route.
+
