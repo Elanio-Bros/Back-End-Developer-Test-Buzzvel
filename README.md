@@ -1,6 +1,6 @@
 # Back-End-Developer-Test-Buzzvel
 ## Conceitos Inciais
-Esse projeto tem como ideia utilizar o framework laravel para inicar um projeto de gerenciamento de planos, utilizando-se de teste de intergração no sistema
+Esse projeto tem como ideia utilizar o framework laravel para inicar um projeto de gerenciamento de planos, utilizando-se de teste de intergração no sistema e autenticação via JWT
 
 <details>
 <summary>Sem Docker</summary>
@@ -35,27 +35,26 @@ composer install
 ```bash
 php artisan key:generate
 ```
-2. Gerar chave de encriptação da authenticação JWT
+3. Gerar chave de encriptação da authenticação JWT
 ```bash
 php artisan jwt:secret
 ```
-3. Criar bases de dados e o segmentos iniciais
+4. Criar bases de dados e o segmentos iniciais
 ```bash
 php artisan migrate --seed
 ```
 
-3. Executar os testes para analisar se está tudo correto na aplicação
-```bash
-php artisan test
-```
-
-4. Inicar um server local
+5. Inicar um server local
 ```bash
 php artisan serve
 ```
 
 Caso queira utilizar ele em um servidor independete deve direcionar para [/public/index.php](public/index.php) para que a aplicação funcione de forma correta.
 
+Caso queira, execute os testes para analise se está em ordem com as rotas na aplicação:
+```bash
+php artisan test
+```
 </details>
 
 <details>
@@ -67,19 +66,27 @@ Caso queira utilizar ele em um servidor independete deve direcionar para [/publi
 
 Para começar execute os comandos :
 
-1. Faça o build da imagem e carrege os contaner:
+1. Execute para poder fazer o build da imagem e inicializar os containers:
 ```bash
 docker-compose -f "docker-compose.yml" up -d --build
 ```
-2. Criar um copia do arquivo .env:
+
+2. Execute esse comando para uma configuração rápida da aplicação:
+
+``` bash
+docker exec -it aplication bash -c "cp .env.example .env; php artisan key:generate; php artisan jwt:secret; php artisan migrate --seed"
+```
+Ou Execute esses abaixo para:
+
+3. Criar um copia do arquivo .env:
 ```bash
 docker exec -it aplication cp .env.example .env
 ```
-4. Gerar chave de encriptação da aplicação
+4. Gerar a chave de encriptação da aplicação:
 ```bash
 docker exec -it aplication php artisan key:generate
 ```
-5. Gerar chave de encriptação da authenticação JWT
+5. Gerar chave de encriptação da authenticação JWT:
 ```bash
 docker exec -it aplication php artisan jwt:secret
 ```
@@ -88,20 +95,12 @@ docker exec -it aplication php artisan jwt:secret
 docker exec -it aplication php artisan migrate --seed
 ```
 
-ou execute apenas o short comand
-
-``` bash
-docker exec -it aplication bash -c "cp .env.example .env; php artisan key:generate; php artisan jwt:secret; php artisan migrate --seed"
-```
-
 Pronto seu sistema estára configurado para rodar de forma nativa no seu docker em [localhost](http://localhost/).
 
-Caso queira Executar os testes para analisar se está tudo correto na aplicação poode executar o comando:
+Caso queira, execute os testes para analise se está em ordem com as rotas na aplicação::
 ```bash
 docker exec -it aplication php artisan test
 ```
-
-
 </details>
 
 
